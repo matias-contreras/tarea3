@@ -69,8 +69,8 @@ def funcion_cero_semi(t, solucion=0.025):
 sol_grad = fsolve(funcion_cero, 50) # tiempo en el que el gradiente es 25 grados por km
 sol_grad_semi = fsolve(funcion_cero_semi, 50) # tiempo en el que el gradiente es 25 grados por km
 
-print('tiempo para un gradiente de 25 grados por km(modelo esferico): ' + str(sol_grad))
-print('tiempo para un gradiente de 25 grados por km(modelo de semiespacio): ' + str(sol_grad_semi))
+print('tiempo para un gradiente de 25 grados por km(modelo esferico): ' + str(sol_grad) + 'Ma')
+print('tiempo para un gradiente de 25 grados por km(modelo de semiespacio): ' + str(sol_grad_semi) + 'Ma')
 
 
 n = 10**4
@@ -81,13 +81,17 @@ for time in range(30, 100):
     gradientes.append(gradiente_sup(time))
     gradientes_semi.append(gradiente_semi_sup(time))
 
-#gradientes = np.array(gradientes)
 
+plt.figure(figsize=(10, 6))
 plt.plot(tiempo, gradientes, label='modelo esférico', color='g')
 plt.plot(tiempo, gradientes_semi, label='modelo del semiespacio', color='r')
 plt.axhline(-0.025, linewidth=0.8, color='k')
 plt.axvline(sol_grad, color='g', linewidth=0.8)
 plt.axvline(sol_grad_semi, color='r', linewidth=0.8)
+plt.title('Gráfico tiempo v/s gradiente superficial')
+plt.xlabel('tiempo [millones de años]')
+plt.ylabel('gradiente de temperatura superficial [$\dfrac{grados}{metro}$]')
+plt.savefig('imagenes\grafico_gradiente_vs_tiempo')
 
 plt.legend()
 plt.show()
